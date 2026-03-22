@@ -5,7 +5,7 @@
 
 你有n瓶可樂，每 **3 個空瓶**可以換 **1 瓶**新的可樂。你想知道在「可以借空瓶（但最後必須還回去）」的情況下，最多能喝到幾瓶可樂？
 
-🔗 **[Problem Link](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=23&page=show_problem&problem=2091)**
+**[Problem Link](https://zerojudge.tw/ShowProblem?problemid=d189)**
 
 ---
 
@@ -39,7 +39,8 @@
 
 ---
 
-## 💻 Source Code
+## Source Code
+**[Code Link](https://github.com/Yili-1021/11402_CI002/blob/main/HomeWork/Week4_11150/code.cpp)**
 
 ```cpp
 #include <iostream>
@@ -77,7 +78,7 @@ int main() {
 ```
 ---
 
-## 📊 Complexity Analysis
+## Complexity Analysis
 
 
 
@@ -87,7 +88,7 @@ int main() {
 
 ---
 
-## 🧠 Notes & Reflection
+## Notes & Reflection
 
 * **Challenges**
   * 剛開始可能會猶豫「借瓶子」這個動作要如何轉化為程式碼。
