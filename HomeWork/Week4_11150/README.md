@@ -11,9 +11,9 @@
 
 ## Learning Objectives
 
-**Understand Greedy Thinking**: 學習如何透過「借與還」的邏輯極大化收益。
-**Implement Iterative Logic**: 使用 `while` 迴圈模擬重複兌換過程。
-**Practice I/O Handling**: 使用 `while (cin >> n)` 處理多組測試資料直到檔案結束 (EOF)。
+**Understand Greedy Thinking**: 學習如何透過「借與還」的邏輯極大化收益。  
+**Implement Iterative Logic**: 使用 `while` 迴圈模擬重複兌換過程。  
+**Practice I/O Handling**: 使用 `while (cin >> n)` 處理多組測試資料直到檔案結束 (EOF)。  
 
 ---
 
