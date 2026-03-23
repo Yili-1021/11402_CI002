@@ -40,44 +40,42 @@
 ---
 
 ## Source Code
-
+**[Code Link](https://github.com/Yili-1021/11402_CI002/blob/main/HomeWork/Week4_12503/code.cpp)**
 ```cpp
 #include <iostream>
-#include <string>
-
 using namespace std;
+int main()
+{
+	int t;
+	cin >> t;
+	while (t--) {
+		int n;
+		cin >> n;
+		int map = 0;// 機器人最終位置
+		int cmd[105];// 記錄歷史位移
 
-int main() {
-    int t;
-    if (!(cin >> t)) return 0;
-    while (t--) {
-        int n;
-        cin >> n;
-        int position = 0;   // 機器人最終位置
-        int cmd[105];       // 記錄歷史指令位移量
+		for (int i = 1; i <= n; i++) {
+			string s;
+			cin >> s;
+			if (s == "LEFT") {
+				cmd[i] = -1;
+			}
+			else if (s == "RIGHT") {
+				cmd[i] = 1;
+			}
+			else { // 處理 "SAME AS k"，這裡最好改成if (s == "SAME")
+				string tmp;//把as讀掉
+				int k;
+				cin >> tmp >> k;
+				cmd[i] = cmd[k];// 把數字讀進來，存進 index
+			}
+			map += cmd[i];
+		}
+		cout << map << endl;
 
-        for (int i = 1; i <= n; i++) {
-            string s;
-            cin >> s;
-            if (s == "LEFT") {
-                cmd[i] = -1;
-            }
-            else if (s == "RIGHT") {
-                cmd[i] = 1;
-            }
-            else {
-                // 處理 "SAME AS k"
-                string tmp;
-                int k;
-                cin >> tmp >> k; // 讀掉 "AS"，取得 k
-                cmd[i] = cmd[k];
-            }
-            position += cmd[i];
-        }
-        cout << position << endl;
-    }
-    return 0;
-}
+	}
+
+};
 ```
 
 ---
