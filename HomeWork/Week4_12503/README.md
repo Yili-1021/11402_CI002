@@ -83,7 +83,7 @@ int main()
 ## Complexity Analysis
 
 
-**Time Complexity** $O(T \times n)$  T 為測試資料組數，n 為每組指令數。每一條指令只需 O(1) 時間處理。 
+**Time Complexity** $O(T \times n)$  T 為測試資料組數，n 為每組指令數。每一條指令只需 O(1) 時間處理。   
 **Space Complexity** $O(n)$  使用 cmd[105] 陣列儲存指令歷史，空間消耗隨指令數線性增加。 
 
 ---
@@ -91,7 +91,7 @@ int main()
 ## Notes & Reflection
 
 * **Challenges**
-  * **字串處理**：遇到 SAME AS i 時，一開始會忘記跳過中間的 "AS"。後來發現可以用一個臨時字串 tmp把它讀掉，再讀取後面的整數 k。
+  * **字串處理**：到 SAME AS i 時，一開始會忘記跳過中間的 "AS"。後來發現可以用一個臨時字串 tmp把它讀掉，再讀取後面的整數k。
   * **陣列索引**：題目給的 k 是從 1 開始。
 
 * **Improvement**
