@@ -31,7 +31,7 @@ Cycle length 的定義：
 ---
 
 ## Source Code
-**[Code Link](https://github.com/Yili-1021/11402_CI002/blob/main/HomeWork/Week1_01_100/code.cpp)**
+**[Week1_01_UVa100 程式碼](https://github.com/Yili-1021/11402_CI002/blob/main/On-Site_Examinations/Week1_01_100/src)**
 ```cpp
 #include <iostream>
 using namespace std;
