@@ -1,0 +1,26 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, b, h, w;
+    while (cin >> n >> b >> h >> w) {
+        int minCost = b + 1; // 初始值設比預算大
+        for (int i = 0; i < h; i++) {
+            int price;
+            cin >> price;
+            vector<int> beds(w);
+            for (int j = 0; j < w; j++) {
+                cin >> beds[j];
+                if (beds[j] >= n) { // 床位夠
+                    int total = n * price;
+                    if (total <= b) minCost = min(minCost, total);
+                }
+            }
+        }
+        if (minCost <= b) cout << minCost << endl;
+        else cout << "stay home" << endl;
+    }
+    return 0;
+}
