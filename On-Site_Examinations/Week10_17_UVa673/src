@@ -1,0 +1,46 @@
+#include<iostream>
+#include<string>
+#include<stack>
+using namespace std;
+
+int main(){
+    int n;
+    cin >> n;          // 讀入測資筆數
+    cin.ignore();      // 忽略換行符，避免 getline() 讀到空字串
+
+    while(n--){        // 處理每一筆測資
+        string s;
+        getline(cin, s);   // 讀入一整行字串
+        stack<char> st;    // 建立一個 stack 來存括號
+        bool ok = true;    // 用來記錄字串是否正確
+
+        // 逐字檢查字串
+        for(char c : s){
+            if(c == '(' || c == '['){
+                // 遇到開括號就 push 進 stack
+                st.push(c);
+            } else if(c == ')'){
+                // 遇到 ')' 時，檢查 stack 是否為空或頂端不是 '('
+                if(st.empty() || st.top() != '('){
+                    ok = false; // 不符合規則
+                    break;      // 提前結束迴圈
+                }
+                st.pop();       // 成功配對，移除頂端元素
+            } else if(c == ']'){
+                // 遇到 ']' 時，檢查 stack 是否為空或頂端不是 '['
+                if(st.empty() || st.top() != '['){
+                    ok = false; // 不符合規則
+                    break;      // 提前結束迴圈
+                }
+                st.pop();       // 成功配對，移除頂端元素
+            }
+            // 其他字元不用處理，題目只會給 ()[]
+        }
+
+        // 如果最後 stack 還有東西，代表有括號沒配對成功
+        if(!st.empty()) ok = false;
+
+        // 輸出結果：正確配對 → Yes，不正確 → No
+        cout << (ok ? "Yes" : "No") << endl;
+    }
+}
