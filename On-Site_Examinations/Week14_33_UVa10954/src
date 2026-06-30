@@ -1,0 +1,36 @@
+#include <iostream>
+#include <queue>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n;
+    while (cin >> n && n != 0) {
+        // 建立一個最小堆疊 (Min-Heap)
+        priority_queue<int, vector<int>, greater<int>> pq;
+
+        for (int i = 0; i < n; i++) {
+            int val;
+            cin >> val;
+            pq.push(val);
+        }
+
+        long long total_cost = 0;
+
+        // 當佇列中剩下一顆以上的數字時，持續進行合併
+        while (pq.size() > 1) {
+            // 取出當前最小的兩個數字
+            int first = pq.top(); pq.pop();
+            int second = pq.top(); pq.pop();
+
+            int cost = first + second;
+            total_cost += cost; // 累積本次合併的成本
+
+            // 將合併後的新數字放回佇列中
+            pq.push(cost);
+        }
+
+        cout << total_cost << endl;
+    }
+    return 0;
+}
