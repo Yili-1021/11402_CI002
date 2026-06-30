@@ -1,0 +1,43 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+// s: 當前範圍的起點數字, e: 當前範圍的終點數字, h: 當前允許的最大高度
+void solve(int s, int e, int h) {
+    if (s > e) return;
+
+    int total_nodes = e - s + 1;
+    
+    // 在高度 h - 1 的限制下，右子樹最多能容納的節點數
+    // 使用 min(h-1, 30) 防止位移運算超過 int 上限
+    int max_right_capacity = (1 << min(h - 1, 30)) - 1;
+
+    // 為了讓右子樹放得下，根節點左側(含根節點自己)必須保留的最小節點數
+    int root_offset = max(1, total_nodes - max_right_capacity);
+
+    // 決定當前根節點的數值
+    int root_val = s + root_offset - 1;
+
+    // 前序走訪：先輸出根節點
+    cout << " " << root_val;
+
+    // 遞迴處理左子樹與右子樹，高度限制皆減 1
+    solve(s, root_val - 1, h - 1);
+    solve(root_val + 1, e, h - 1);
+}
+
+int main() {
+    int n, h, case_num = 1;
+    while (cin >> n >> h && (n != 0 || h != 0)) {
+        cout << "Case " << case_num++ << ":";
+
+        // 如果總節點數大於高度 h 能容納的最大滿二元樹節點數，則無解
+        if (h < 31 && n > (1 << h) - 1) {
+            cout << " Impossible." << endl;
+        } else {
+            solve(1, n, h);
+            cout << endl;
+        }
+    }
+    return 0;
+}
