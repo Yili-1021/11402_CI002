@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+// 實作大數加法：c = a + b
+string add(const string& a, const string& b) {
+    string res = "";
+    int i = a.length() - 1;
+    int j = b.length() - 1;
+    int carry = 0;
+
+    while (i >= 0 || j >= 0 || carry) {
+        int sum = carry;
+        if (i >= 0) sum += a[i--] - '0';
+        if (j >= 0) sum += b[j--] - '0';
+        carry = sum / 10;
+        res += to_string(sum % 10);
+    }
+    reverse(res.begin(), res.end());
+    return res;
+}
+
+int main() {
+    // 最佳化輸入輸出速度
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    // 1. 預處理建表，上限 N = 5000
+    vector<string> fib(5001);
+    fib[0] = "0";
+    fib[1] = "1";
+
+    for (int i = 2; i <= 5000; i++) {
+        fib[i] = add(fib[i - 1], fib[i - 2]);
+    }
+
+    int n;
+    // 2. $O(1)$ 時間查表回應詢問
+    while (cin >> n) {
+        cout << "The Fibonacci number for " << n << " is " << fib[n] << "\n";
+    }
+
+    return 0;
+}
