@@ -1,0 +1,44 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+// 根據 Ahnentafel 編號找出該節點位於第幾代 (1-indexed)
+int get_generation(int node) {
+    int gen = 0;
+    while (node > 0) {
+        node /= 2;
+        gen++;
+    }
+    return gen;
+}
+
+int main() {
+    int t;
+    if (cin >> t) {
+        while (t--) {
+            int n, a, b;
+            cin >> n >> a >> b;
+
+            // 完美的 N 代二元樹總人數為 2^n - 1
+            int total_people = (1 << n) - 1;
+
+            // A 和 B 是親兄弟，他們的父母是同一個人，編號為 a / 2
+            int parent_node = a / 2;
+
+            // 找出父母這個節點在哪一代
+            int parent_gen = get_generation(parent_node);
+
+            // 從父母這一代一路上溯到第 n 代，這棵重複子樹的高度為 n - parent_gen + 1
+            int overlap_height = n - parent_gen + 1;
+
+            // 重複子樹的總人數
+            int overlap_people = (1 << overlap_height) - 1;
+
+            // 實際不同的人數 = 總人數 - 重複人數
+            int ans = total_people - overlap_people;
+
+            cout << ans << endl;
+        }
+    }
+    return 0;
+}
