@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int t, case_num = 1;
+    if (cin >> t) {
+        while (t--) {
+            char dummy1, dummy2; // 用來吃掉 "N" 和 "="
+            int n;
+            cin >> dummy1 >> dummy2 >> n;
+
+            // 使用 long long 防止數值過大溢位
+            vector<vector<long long>> matrix(n, vector<long long>(n));
+            bool is_symmetric = true;
+
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    cin >> matrix[i][j];
+                    // 條件 1：所有元素必須大於或等於 0
+                    if (matrix[i][j] < 0) {
+                        is_symmetric = false;
+                    }
+                }
+            }
+
+            // 條件 2：檢查中心對稱性 M[i][j] == M[n - 1 - i][n - 1 - j]
+            if (is_symmetric) {
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < n; j++) {
+                        if (matrix[i][j] != matrix[n - 1 - i][n - 1 - j]) {
+                            is_symmetric = false;
+                            break;
+                        }
+                    }
+                    if (!is_symmetric) break;
+                }
+            }
+
+            if (is_symmetric) {
+                cout << "Test #" << case_num++ << ": Symmetric." << endl;
+            } else {
+                cout << "Test #" << case_num++ << ": Non-symmetric." << endl;
+            }
+        }
+    }
+    return 0;
+}
