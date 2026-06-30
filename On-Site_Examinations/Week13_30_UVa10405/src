@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    string a, b;
+    // 題目會給定多組測資，使用 getline 讀取整行，直到檔案結束（EOF）
+    while (getline(cin, a) && getline(cin, b)) {
+        int len_a = a.length();
+        int len_b = b.length();
+
+        // 建立 (len_a + 1) x (len_b + 1) 的二維 DP 陣列，並初始化為 0
+        vector<vector<int>> dp(len_a + 1, vector<int>(len_b + 1, 0));
+
+        for (int i = 1; i <= len_a; i++) {
+            for (int j = 1; j <= len_b; j++) {
+                if (a[i - 1] == b[j - 1]) {
+                    // 字元相同，LCS 長度加 1
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    // 字元不同，取左邊或上邊的最大值
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        // 右下角的值即為兩個完整字串的 LCS 長度
+        cout << dp[len_a][len_b] << endl;
+    }
+    return 0;
+}
