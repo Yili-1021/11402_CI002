@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string>
+#include <list>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int p, c, case_num = 1;
+    while (cin >> p >> c && (p != 0 || c != 0)) {
+        cout << "Case " << case_num++ << ":" << endl;
+
+        list<int> q;
+        // 關鍵優化：人數極大時，最多只需要把前 c 個人放進初始隊伍
+        int limit = min(p, c);
+        for (int i = 1; i <= limit; i++) {
+            q.push_back(i);
+        }
+
+        while (c--) {
+            char cmd;
+            cin >> cmd;
+            if (cmd == 'N') {
+                // 取出隊伍最前端的病人
+                int current = q.front();
+                cout << current << endl;
+                q.pop_front();
+                // 看診完後排到隊伍最後面
+                q.push_back(current);
+            } 
+            else if (cmd == 'E') {
+                int x;
+                cin >> x;
+                // 如果這個人本來就在我們維護的隊伍中，先將他移除
+                q.remove(x);
+                // 直接插隊到最前端
+                q.push_front(x);
+            }
+        }
+    }
+    return 0;
+}
