@@ -1,0 +1,38 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    string a, b;
+    // 測資中可能包含空字串，必須使用 getline 讀取整行
+    while (getline(cin, a) && getline(cin, b)) {
+        vector<int> count_a(26, 0);
+        vector<int> count_b(26, 0);
+
+        // 統計字串 A 的字元頻率
+        for (char c : a) {
+            if (c >= 'a' && c <= 'z') {
+                count_a[c - 'a']++;
+            }
+        }
+
+        // 統計字串 B 的字元頻率
+        for (char c : b) {
+            if (c >= 'a' && c <= 'z') {
+                count_b[c - 'a']++;
+            }
+        }
+
+        // 依字典序（a 到 z）比對並輸出
+        for (int i = 0; i < 26; i++) {
+            int common_count = min(count_a[i], count_b[i]);
+            for (int j = 0; j < common_count; j++) {
+                cout << (char)('a' + i);
+            }
+        }
+        cout << endl;
+    }
+    return 0;
+}
