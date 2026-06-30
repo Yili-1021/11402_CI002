@@ -1,0 +1,30 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    int t, case_num = 1;
+    if (cin >> t) {
+        while (t--) {
+            int n;
+            string field;
+            cin >> n >> field;
+
+            int scarecrows = 0;
+            for (int i = 0; i < n; ) {
+                if (field[i] == '.') {
+                    // 遇到需要保護的土地，貪婪地將稻草人放在 i+1 的位置
+                    scarecrows++;
+                    // 稻草人可以覆蓋 i, i+1, i+2，所以指針直接往後跳 3 格
+                    i += 3;
+                } else {
+                    // 遇到不需要保護的荒地，直接看下一格
+                    i++;
+                }
+            }
+
+            cout << "Case " << case_num++ << ": " << scarecrows << endl;
+        }
+    }
+    return 0;
+}
