@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    // 優化輸入輸出效能
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int b, s;
+    while (cin >> b >> s && (b != 0 || s != 0)) {
+        // 配置 1-indexed 陣列，多開空間給邊界 0 與 b + 1
+        vector<int> left_buddy(b + 2);
+        vector<int> right_buddy(b + 2);
+
+        // 初始狀態下，每個人的鄰居就是相鄰的編號
+        for (int i = 1; i <= b; i++) {
+            left_buddy[i] = i - 1;
+            right_buddy[i] = i + 1;
+        }
+
+        // 邊界哨兵（Sentinel）設定
+        left_buddy[1] = 0;      // 1 的左邊沒有活人
+        right_buddy[b] = 0;     // b 的右邊沒有活人
+
+        for (int i = 0; i < s; i++) {
+            int l, r;
+            cin >> l >> r;
+
+            // 1. 更新邊界倖存者的鄰居指針
+            int new_left = left_buddy[l];
+            int new_right = right_buddy[r];
+
+            if (new_left != 0) right_buddy[new_left] = new_right;
+            if (new_right != 0) left_buddy[new_right] = new_left;
+
+            // 2. 輸出當前轟炸後，左邊與右邊倖存的戰友
+            if (new_left == 0) cout << "*";
+            else cout << new_left;
+
+            cout << " ";
+
+            if (new_right == 0) cout << "*";
+            else cout << new_right;
+
+            cout << "\n"; // 使用 \n 代替 endl 加速
+        }
+        cout << "-\n";
+    }
+    return 0;
+}
