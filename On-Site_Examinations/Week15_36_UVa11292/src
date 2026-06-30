@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, m;
+    // 當 n 和 m 皆為 0 時結束程式
+    while (cin >> n >> m && (n != 0 || m != 0)) {
+        vector<int> dragon(n);
+        vector<int> knight(m);
+
+        for (int i = 0; i < n; i++) cin >> dragon[i];
+        for (int i = 0; i < m; i++) cin >> knight[i];
+
+        // 1. 將龍頭直徑與騎士身高進行排序
+        sort(dragon.begin(), dragon.end());
+        sort(knight.begin(), knight.end());
+
+        int d_idx = 0; // 龍頭的指針
+        int k_idx = 0; // 騎士的指針
+        long long total_gold = 0;
+
+        // 2. 使用雙指針進行貪婪配對
+        while (d_idx < n && k_idx < m) {
+            if (knight[k_idx] >= dragon[d_idx]) {
+                // 騎士足夠強，僱用他砍掉這顆頭
+                total_gold += knight[k_idx];
+                d_idx++; // 處理下一顆龍頭
+            }
+            k_idx++; // 不論騎士有沒有被僱用，指針都往後移（因為排序過，前面的騎士太矮派不上用場了）
+        }
+
+        // 3. 判斷是否成功砍完所有龍頭
+        if (d_idx == n) {
+            cout << total_gold << endl;
+        } else {
+            cout << "Loowater is doomed!" << endl;
+        }
+    }
+    return 0;
+}
