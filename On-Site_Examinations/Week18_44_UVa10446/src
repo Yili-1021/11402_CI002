@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+#include <cstring>
+using namespace std;
+
+// 題目範圍：n <= 60, back <= 60
+// 呼叫次數增長極快，必須使用 unsigned long long 來儲存以防溢位
+unsigned long long dp[65][65];
+
+unsigned long long solve_dp(int n, int back) {
+    // 基底條件：n <= 0 或 n == 1，函式直接 return，只算呼叫 1 次
+    if (n <= 0 || n == 1) return 1;
+    
+    // 如果已經計算過，直接回傳
+    if (dp[n][back] != 0) return dp[n][back];
+
+    unsigned long long sum = 1; // 算入目前自己被呼叫的這 1 次
+    for (int i = 1; i <= back; i++) {
+        sum += solve_dp(n - i, back);
+    }
+
+    return dp[n][back] = sum;
+}
+
+int main() {
+    int n, back;
+    int case_num = 1;
+    
+    // 初始化 DP 表格為 0
+    memset(dp, 0, sizeof(dp));
+
+    // 當輸入的 n 超過 60 時結束程式
+    while (cin >> n >> back && n <= 60) {
+        cout << "Case " << case_num++ << ": " << solve_dp(n, back) << endl;
+    }
+    return 0;
+}
