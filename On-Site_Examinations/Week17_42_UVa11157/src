@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+struct Stone {
+    char type;
+    int pos;
+};
+
+void solve(int case_num) {
+    int n, d;
+    cin >> n >> d;
+
+    // 建立石頭陣列，並預先加入起點（左岸，視為大石頭）
+    vector<Stone> stones;
+    stones.push_back({'L', 0});
+
+    for (int i = 0; i < n; i++) {
+        string s;
+        cin >> s;
+        char type = s[0];
+        int pos = stoi(s.substr(2));
+        stones.push_back({type, pos});
+    }
+    // 加入終點（右岸，視為大石頭）
+    stones.push_back({'L', d});
+
+    int max_jump = 0;
+
+    // 遍歷所有石頭計算可能的最大跳躍距離
+    for (size_t i = 0; i < stones.size() - 1; i++) {
+        // 狀況 1：看相鄰的下一顆石頭
+        max_jump = max(max_jump, stones[i+1].pos - stones[i].pos);
+
+        // 狀況 2：如果下一顆是小石頭，代表其中一隻青蛙會跳過它，改跳到 i+2 的位置
+        if (i + 2 < stones.size() && stones[i+1].type == 'S') {
+            max_jump = max(max_jump, stones[i+2].pos - stones[i].pos);
+        }
+    }
+
+    cout << "Case " << case_num << ": " << max_jump << endl;
+}
+
+int main() {
+    int t;
+    if (cin >> t) {
+        for (int i = 1; i <= t; i++) {
+            solve(i);
+        }
+    }
+    return 0;
+}
