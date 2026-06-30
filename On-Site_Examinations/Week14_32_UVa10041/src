@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int t;
+    if (cin >> t) {
+        while (t--) {
+            int r;
+            cin >> r;
+
+            vector<int> streets(r);
+            for (int i = 0; i < r; i++) {
+                cin >> streets[i];
+            }
+
+            // 1. 由小到大排序，方便尋找中位數
+            sort(streets.begin(), streets.end());
+
+            // 2. 找出中位數作為 Vito 的最佳居住位置
+            int vito_house = streets[r / 2];
+
+            // 3. 計算所有人到 Vito 家的絕對距離總和
+            int total_distance = 0;
+            for (int i = 0; i < r; i++) {
+                total_distance += abs(streets[i] - vito_house);
+            }
+
+            cout << total_distance << endl;
+        }
+    }
+    return 0;
+}
