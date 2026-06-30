@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <iomanip>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int c, s;
+    int set_num = 1;
+    while (cin >> c >> s) {
+        vector<int> specimens(2 * c, 0); // 直接開 2C 大小，預設補 0
+        double sum = 0;
+
+        for (int i = 0; i < s; i++) {
+            cin >> specimens[i];
+            sum += specimens[i];
+        }
+
+        double avg = sum / c; // 計算平均值
+
+        // 1. 進行排序（前 S 個是實體，後面 2C-S 個是 0，排序後 0 會跑到最前面）
+        sort(specimens.begin(), specimens.end());
+
+        cout << "Set #" << set_num++ << endl;
+
+        double total_imbalance = 0;
+
+        // 2. 進行首尾貪婪配對
+        for (int i = 0; i < c; i++) {
+            cout << " " << i << ":";
+            
+            int p1 = specimens[i];
+            int p2 = specimens[2 * c - 1 - i];
+
+            // 輸出時注意：虛擬的 0 不用印出來
+            if (p1 != 0) cout << " " << p1;
+            if (p2 != 0) cout << " " << p2;
+            cout << endl;
+
+            // 累加該艙室的不平衡度
+            total_imbalance += abs((p1 + p2) - avg);
+        }
+
+        // 3. 輸出總不平衡度，保留 5 位小數
+        cout << "IMBALANCE = " << fixed << setprecision(5) << total_imbalance << endl << endl;
+    }
+    return 0;
+}
