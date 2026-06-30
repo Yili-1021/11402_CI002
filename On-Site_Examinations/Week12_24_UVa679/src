@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int l; // 測試資料組數
+    if (cin >> l) {
+        while (l--) {
+            int d, i;
+            cin >> d >> i;
+
+            int k = 1; // 從根節點 1 開始
+            // 深度為 d 的樹，需要向下走 d-1 步到達葉子節點
+            for (int step = 0; step < d - 1; step++) {
+                if (i % 2 == 1) { 
+                    // 奇數顆球，往左子樹走
+                    k = 2 * k;
+                    i = (i + 1) / 2; // 更新為掉入左子樹的球數序號
+                } else { 
+                    // 偶數顆球，往右子樹走
+                    k = 2 * k + 1;
+                    i = i / 2;       // 更新為掉入右子樹的球數序號
+                }
+            }
+            cout << k << endl;
+        }
+        // 讀取最後的結尾標記 -1
+        int stop;
+        cin >> stop;
+    }
+    return 0;
+}
