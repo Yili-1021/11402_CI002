@@ -1,0 +1,57 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <map>
+#include <vector>
+using namespace std;
+
+// 元素最大值通常在題目限制內，這裡假設元素編號小於 1000000
+int element_to_team[1000000]; 
+
+int main() {
+    int t, scenario = 1;
+    while (cin >> t && t) {
+        cout << "Scenario #" << scenario++ << endl;
+
+        // 讀取團隊資訊並建立查找表
+        for (int i = 0; i < t; i++) {
+            int n;
+            cin >> n;
+            for (int j = 0; j < n; j++) {
+                int element;
+                cin >> element;
+                element_to_team[element] = i; // 記錄這個元素屬於第 i 隊
+            }
+        }
+
+        queue<int> team_q;          // 大佇列：記錄目前有哪些團隊在排隊
+        vector<queue<int>> q(t);    // 小佇列陣列：每個團隊各自的排隊佇列
+
+        string cmd;
+        while (cin >> cmd && cmd != "STOP") {
+            if (cmd == "ENQUEUE") {
+                int x;
+                cin >> x;
+                int team_id = element_to_team[x];
+
+                // 如果該團隊的小佇列目前是空的，代表大隊伍中還沒有這個團隊
+                if (q[team_id].empty()) {
+                    team_q.push(team_id); // 將團隊編號加入大佇列中
+                }
+                q[team_id].push(x);       // 成員加入自己團隊的小佇列
+            } 
+            else if (cmd == "DEQUEUE") {
+                int current_team = team_q.front(); // 找出目前大隊伍最前面的團隊
+                cout << q[current_team].front() << endl; // 輸出該團隊最前面的成員
+                q[current_team].pop();             // 移除該成員
+
+                // 如果該團隊的所有成員都出隊了，大隊伍中就不再需要保留這個團隊
+                if (q[current_team].empty()) {
+                    team_q.pop();
+                }
+            }
+        }
+        cout << endl; // 每組測資輸出完後加一個空行
+    }
+    return 0;
+}
