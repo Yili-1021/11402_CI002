@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    // 儲存每個箱子的 B, G, C 數量
+    // b1, g1, c1, b2, g2, c2, b3, g3, c3
+    int b[4], g[4], c[4];
+
+    while (cin >> b[1] >> g[1] >> c[1] >> b[2] >> g[2] >> c[2] >> b[3] >> g[3] >> c[3]) {
+        // 計算所有瓶子的總數
+        long long total = 0;
+        for (int i = 1; i <= 3; i++) {
+            total += b[i] + g[i] + c[i];
+        }
+
+        long long min_move = -1;
+        string best_config = "";
+
+        // 依據字典順序 (Alphabetical Order) 定義 6 種排列組合
+        string configs[] = {"BCG", "BGC", "CBG", "CGB", "GBC", "GCB"};
+
+        for (const string& s : configs) {
+            long long current_move = total;
+
+            // 扣除各箱子指定留下的瓶子數量
+            if (s == "BCG") current_move -= (b[1] + c[2] + g[3]);
+            else if (s == "BGC") current_move -= (b[1] + g[2] + c[3]);
+            else if (s == "CBG") current_move -= (c[1] + b[2] + g[3]);
+            else if (s == "CGB") current_move -= (c[1] + g[2] + b[3]);
+            else if (s == "GBC") current_move -= (g[1] + b[2] + c[3]);
+            else if (s == "GCB") current_move -= (g[1] + c[2] + b[3]);
+
+            // 如果是第一組，或者找到更小的搬移步數，則更新答案
+            if (min_move == -1 || current_move < min_move) {
+                min_move = current_move;
+                best_config = s;
+            }
+        }
+
+        cout << best_config << " " << min_move << endl;
+    }
+    return 0;
+}
