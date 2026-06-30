@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n;
+    while (cin >> n && n != 0) {
+        // 使用 map 來統計每種選課組合出現的次數
+        map<vector<int>, int> popularity_map;
+        int max_popularity = 0;
+
+        for (int i = 0; i < n; i++) {
+            vector<int> courses(5);
+            for (int j = 0; j < 5; j++) {
+                cin >> courses[j];
+            }
+
+            // 1. 排序 5 門課程，消除輸入順序的差異
+            sort(courses.begin(), courses.end());
+
+            // 2. 將組合計數加 1，並同步更新最高人氣紀錄
+            popularity_map[courses]++;
+            max_popularity = max(max_popularity, popularity_map[courses]);
+        }
+
+        // 3. 計算所有達到最高人氣組合的學生總人數
+        int total_students = 0;
+        for (auto const& [combination, count] : popularity_map) {
+            if (count == max_popularity) {
+                total_students += count;
+            }
+        }
+
+        cout << total_students << endl;
+    }
+    return 0;
+}
