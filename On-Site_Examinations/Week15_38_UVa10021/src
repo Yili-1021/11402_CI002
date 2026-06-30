@@ -1,0 +1,75 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct Segment {
+    int l, r;
+};
+
+// 排序比較函式：優先按左端點由小到大排序
+bool compareSegments(const Segment& a, const Segment& b) {
+    return a.l < b.l;
+}
+
+int main() {
+    int t;
+    if (cin >> t) {
+        while (t--) {
+            int m;
+            cin >> m;
+
+            vector<Segment> segments;
+            int l, r;
+            while (cin >> l >> r && (l != 0 || r != 0)) {
+                segments.push_back({l, r});
+            }
+
+            // 1. 依照左端點排序
+            sort(segments.begin(), segments.end(), compareSegments);
+
+            vector<Segment> ans;
+            int current_left = 0; // 當前需要被覆蓋的左界
+            size_t i = 0;
+            bool possible = true;
+
+            // 2. 貪婪掃描區間
+            while (current_left < m) {
+                int max_r = current_left;
+                int best_idx = -1;
+
+                // 尋找所有左端點符合要求、且右端點能延伸最遠的線段
+                while (i < segments.size() && segments[i].l <= current_left) {
+                    if (segments[i].r > max_r) {
+                        max_r = segments[i].r;
+                        best_idx = i;
+                    }
+                    i++;
+                }
+
+                // 如果找不到任何可以往右延伸的線段，代表無法完全覆蓋
+                if (best_idx == -1) {
+                    possible = false;
+                    break;
+                }
+
+                // 採用該線段，並更新目前覆蓋的左界
+                ans.push_back(segments[best_idx]);
+                current_left = max_r;
+            }
+
+            // 3. 輸出結果
+            if (possible && current_left >= m) {
+                cout << ans.size() << endl;
+                for (const auto& seg : ans) {
+                    cout << seg.l << " " << seg.r << endl;
+                }
+            } else {
+                cout << 0 << endl;
+            }
+
+            if (t > 0) cout << endl; // 測資間需輸出空行
+        }
+    }
+    return 0;
+}
