@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, d, r;
+    // 當 n, d, r 皆為 0 時結束程式
+    while (cin >> n >> d >> r && (n != 0 || d != 0 || r != 0)) {
+        vector<int> morning(n);
+        vector<int> afternoon(n);
+
+        for (int i = 0; i < n; i++) cin >> morning[i];
+        for (int i = 0; i < n; i++) cin >> afternoon[i];
+
+        // 1. 上午路線由小到大排序 (升序)
+        sort(morning.begin(), morning.end());
+
+        // 2. 下午路線由大到小排序 (降序)
+        sort(afternoon.begin(), afternoon.end(), greater<int>());
+
+        int total_overtime_pay = 0;
+
+        // 3. 貪婪配對並計算加班費
+        for (int i = 0; i < n; i++) {
+            int total_hours = morning[i] + afternoon[i];
+            if (total_hours > d) {
+                total_overtime_pay += (total_hours - d) * r;
+            }
+        }
+
+        cout << total_overtime_pay << endl;
+    }
+    return 0;
+}
