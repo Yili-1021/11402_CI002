@@ -1,0 +1,23 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    // 題目上限 N <= 50，第 50 項費氏數列會超出 32 位元整數 (int) 的範圍
+    // 因此必須使用 long long 來防止整數溢位 (Integer Overflow)
+    long long fib[51];
+    fib[1] = 1;
+    fib[2] = 2;
+
+    // 1. 建表預處理 (Bottom-up DP)
+    for (int i = 3; i <= 50; i++) {
+        fib[i] = fib[i - 1] + fib[i - 2];
+    }
+
+    int n;
+    // 2. 線性時間查表輸出
+    while (cin >> n && n != 0) {
+        cout << fib[n] << endl;
+    }
+    return 0;
+}
