@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+	int n;
+	while (cin >> n && n) {
+		int q[1000];
+		for (int i = 0; i < n; i++)q[i] = i + 1;
+		cout << "Discarded cards:";
+		int front = 0;
+		int back = n;
+		bool first = true;
+
+		while (back - front > 1) {
+			if (!first)cout << ",";
+			cout << " " << q[front];
+			first = false;
+			front++;
+			q[back] = q[front];
+			back++;
+			front++;
+		}
+		cout << endl<<"Remaining card: " << q[front] << endl;
+	}
+}
