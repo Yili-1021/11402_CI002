@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+
+// dp[i][j] 表示考慮前 i 種衣服後，是否能剛好花費 j 元
+bool dp[25][205]; 
+
+int main() {
+    int n;
+    if (cin >> n) {
+        while (n--) {
+            int m, c;
+            cin >> m >> c;
+
+            // 初始化 DP 陣列
+            memset(dp, false, sizeof(dp));
+            dp[0][0] = true;
+
+            // 依序讀取每種衣服
+            for (int i = 1; i <= c; i++) {
+                int k;
+                cin >> k;
+                while (k--) {
+                    int price;
+                    cin >> price;
+                    
+                    // 根據前一個狀態進行轉移
+                    for (int j = price; j <= m; j++) {
+                        if (dp[i - 1][j - price]) {
+                            dp[i][j] = true;
+                        }
+                    }
+                }
+            }
+
+            // 從最高預算 M 開始往回找最大花費
+            int ans = -1;
+            for (int j = m; j >= 0; j--) {
+                if (dp[c][j]) {
+                    ans = j;
+                    break;
+                }
+            }
+
+            if (ans == -1) {
+                cout << "no solution" << endl;
+            } else {
+                cout << ans << endl;
+            }
+        }
+    }
+    return 0;
+}
