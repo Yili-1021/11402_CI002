@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> pre;
+
+// lower 和 upper 代表當前子樹在前序陣列中的索引範圍 [lower, upper)
+int solve(int lower, int upper) {
+    if (lower >= upper) return 0;
+
+    int root_val = pre[lower];
+    int right_start = lower + 1;
+
+    // 尋找第一個大於根節點的值，作為右子樹的起點
+    while (right_start < upper && pre[right_start] < root_val) {
+        right_start++;
+    }
+
+    // 遞迴處理左子樹：範圍為 [lower + 1, right_start)
+    solve(lower + 1, right_start);
+    
+    // 遞迴處理右子樹：範圍為 [right_start, upper)
+    solve(right_start, upper);
+
+    // 後序走訪：最後輸出根節點
+    cout << root_val << endl;
+    return 0;
+}
+
+int main() {
+    int val;
+    // 題目沒有給定測資數量，讀取到檔案結束（EOF）為止
+    while (cin >> val) {
+        pre.push_back(val);
+    }
+
+    // 開始分治遞迴
+    solve(0, pre.size());
+
+    return 0;
+}
